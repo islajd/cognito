@@ -20,6 +20,7 @@ export class AuthService {
   }
 
   public async signIn(email: string, password: string) {
+    await Auth.configure({authenticationFlowType: "CUSTOM_AUTH"})
     this.cognitoUser = await Auth.signIn(email, password);
   }
 
