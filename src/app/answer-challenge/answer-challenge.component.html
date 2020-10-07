@@ -33,11 +33,15 @@
   </mat-card-content> -->
 
   <mat-card-content>
-    <form fxLayout="row wrap">
-      <mat-form-field>
+    <form fxLayout="row wrap" fxLayoutGap="5%">
+      <mat-form-field fxFlex="0 0 80%" ngClass="input">
         <input matInput placeholder="Code" [formControl]="code" type="text" code name="code"
           autocomplete="code" />
       </mat-form-field>
+      <mat-card-content>
+        <div fxFlex></div>
+        <p>Not a code yet? <a (click)="resend()">Resend</a></p>
+      </mat-card-content>
     </form>
   </mat-card-content>
 

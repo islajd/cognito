@@ -15,7 +15,7 @@ import { tap } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // export class AnswerChallengeComponent implements OnInit, OnDestroy, AfterContentInit {
-export class AnswerChallengeComponent{
+export class AnswerChallengeComponent {
   public code = new FormControl('');
 
   // digit1 = new FormControl('');
@@ -104,6 +104,22 @@ export class AnswerChallengeComponent{
       } else {
         this.errorMessage_.next('That\'s not the right code');
       }
+    } catch (err) {
+      this.errorMessage_.next(err.message || err);
+    } finally {
+      this.busy_.next(false);
+    }
+  }
+
+  public async resend(){
+    try {
+      const loginSucceeded = await this.auth.answerCustomChallenge('RESEND_PIN');
+      if (! loginSucceeded) {
+        this.errorMessage_.next('That\'s not the right code');
+      } 
+      // else {
+      //   this.router.navigate(['/private']);
+      // }
     } catch (err) {
       this.errorMessage_.next(err.message || err);
     } finally {
