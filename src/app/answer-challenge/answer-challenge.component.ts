@@ -97,8 +97,14 @@ export class AnswerChallengeComponent {
       //   .map(digit => (this[`digit${digit}`] as FormControl).value)
       //   .join('');
 
-      const answer = this.code.value
-      const loginSucceeded = await this.auth.answerCustomChallenge(answer);
+      const pin = this.code.value
+
+      const answer = {
+        type: "PIN", 
+        message: pin 
+      }
+
+      const loginSucceeded = await this.auth.answerCustomChallenge(JSON.stringify(answer));
       if (loginSucceeded) {
         this.router.navigate(['/private']);
       } else {
@@ -113,7 +119,13 @@ export class AnswerChallengeComponent {
 
   public async resend(){
     try {
-      const loginSucceeded = await this.auth.answerCustomChallenge('RESEND_PIN');
+
+      const answer = {
+        type: "PIN", 
+        message: "RESEND_PIN" 
+      }
+
+      const loginSucceeded = await this.auth.answerCustomChallenge(JSON.stringify(answer));
       if (! loginSucceeded) {
         this.errorMessage_.next('That\'s not the right code');
       } 
